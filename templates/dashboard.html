@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Add these lines in the head section -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    
+    <title>Research Question Analysis</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-image: url('static/download.webp');
+            background-size: contain;
+            background-repeat: repeat;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: rgb(244, 244, 244);
+            text-align: center;
+            margin-top: 2em;
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .container {
+            display: flex;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            transition: width 0.3s ease-in-out;
+            overflow: hidden;
+             
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .toggle-btn {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            font-size: 30px;
+            width: 200px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgb(0 0 0 /40%);
+        }
+
+        .paragraph-container {
+            max-width: 60%;
+            text-align: center;
+            margin: 2em auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1em;
+            border-radius: 10px;
+        }
+
+        .paragraph {
+            color: white;
+            font-size: medium;
+        }
+
+        .centered-graph {
+            margin-bottom: 2em;
+            top: 30%;
+            left: 10%;
+        }
+
+        .centered-graph img {
+            width: 90%;
+            height: auto;
+            transform: translate(10%, 0%);
+        }
+
+        .centered-graph1, .centered-graph2, .centered-graph3,
+        .centered-graph4, .centered-graph5, .centered-graph6, img {
+            width: 80%;
+            height: auto;
+            transform: translate(15%, 0%);
+        }
+
+        .correlation-image1 img{
+            height: auto;
+            transform: translate(25%, 0%);
+            width: 70%;
+        }
+
+        .sentiments-image1 img{
+            height: auto;
+            transform: translate(25%, 0%);
+            width: 70%;
+        }
+
+        .centered-graph-wordcloud img{
+            height: auto;
+            transform: translate(60%, 0%);
+            width: 50%;
+        }
+
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .artist-container h2 {
+            margin-bottom: 10px;
+            background-color: rgba(9, 1, 1, 0.7);
+        }
+
+        .grid-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px; 
+        margin-left: 200px;
+    }
+
+        .artist-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .artist-container h2{
+            color: white;
+            margin-bottom: 10px;
+        }
+
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .artist-image {
+            max-width: 100%;
+            max-height: 200px;
+            width: auto;
+            height: auto;
+            margin: 0 10px 10px 0;
+            border: 2px solid white;
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s ease-in-out; 
+        }
+        .artist-image:hover {
+            transform: scale(1.05); 
+            border-color: #ffcc00; 
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+        }
+
+        .research3 { 
+        background-color: rgb(0 0 0 / 66%); 
+        padding: 20px;
+        }
+
+  
+        form {
+            display: flex;
+            flex-direction: row; 
+            align-items: center;
+            justify-content: center; 
+            margin-top: 20px;
+        }
+
+        #artistInfo {
+            width: 700px;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+            margin: 0 auto;
+        }
+   
+        label {
+            margin-right: 10px; 
+            color: white;
+            background-color: rgba(227, 217, 217, 0.916);
+            font-size: 30px;
+            color : rgb(86, 13, 158);
+            font-weight: bold;
+        }
+
+
+        select {
+            width: 200px; 
+            padding: 8px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            background-color: #f5f5f5; 
+            color: #333; 
+            cursor: pointer; 
+        }
+
+            select option:checked {
+                background-color: #ddd; 
+            }
+
+
+            select:hover {
+                border-color: #999; 
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+       <div class="sidebar">
+        <a href="#">Dashboard</a>
+        <a href="#correlation-section">Corelation Analysis on Artists and Posts</a>
+        <a href="#sentiment-section">Sentiment Analysis on Artists and Posts</a>
+        <a href="#predictive-section">Predictive Analysis on Artists</a>
+        <a href="#analysis">Artists Likely to be on Spotify trending Wrapped</a>
+        
+    </div>
+    <!-- Main Content -->
+
+    <div class="main-content">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰ Menu</button> 
+
+        <h1>Investigating The Foremost Factors Determining Artists’ Success</h1>
+
+        <div class="paragraph-container">
+            <p class="paragraph">The contemporary music industry stands at a crossroads of unprecedented change, driven by technological advancements, digital platforms, and evolving consumer preferences. In this era of rapid transformation, understanding the intricate factors that determine an artist’s success has never been more crucial. Artists, both emerging and established, navigate a complex web of variables that shape their careers. From captivating crafting melodies to cultivating a devoted fan base and securing lucrative partnerships, the road to success is as diverse as it is challenging. To gain insights into this intricate web, we employ a fusion of social media analysis and data science methodologies, harnessing the capabilities of two prominent APIs: Reddit and Spotify. Reddit, as one of the largest and most diverse online communities, provides a treasure trove of fan discussions, reviews, and opinions. We delve into this wealth of data to discern patterns in fan engagement, sentiment analysis, and emerging trends within the music community. In parallel, we leverage Spotify’s vast music streaming data, which encompasses play counts, follower growth, and playlist placements, offering a window into an artist’s performance in the digital realm. In this project, we’ll be gathering real-time music-related data to determine what musical style or performer is popular and trending when - we’ll combine all this information from these sources within a certain time frame. </p>
+        </div>
+
+        <div class="centered-graph carousel">
+            <img src="{{ graph_urls['research1'] }}" alt="Graph 2 Image 1">
+            <img src="{{ graph_urls['research2'] }}" alt="Graph 2 Image 2">
+        </div>
+
+    <div class="research1" id="correlation-section">
+
+        <h1>Correlation Analysis on Spotify Trending Artists’ with Subreddit Posts </h1>
+
+        <form>
+            <label for="artists">Choose an artist:</label>
+            <select id="artists" name="artists">
+                <option value="" disabled selected>Please select an artist</option>
+                {% for artist in artists1 %}
+                <option value="{{ artist }}">{{ artist }}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <br> <br>
+        <div id="artistInfo"></div>
+
+        <br> <br>
+        <div class="correlation-image1">
+            <img src="{{ url_for('static', filename='research5.png') }}" alt="Graph 5">
+            <div class="paragraph-container">
+                <p class="paragraph">
+                We will be looking out whether there is a correlation in the number of posts in their subreddits which makes an impact on their populartiy on Spotify by plotting a dual-axis bar and line chart which will be most convinient for us to study and understand.
+                We are calculating the pearson coefficient coefficient between popularity scores and the number of posts. Artists like "Taylor Swift," "Travis Scott," and "The Weeknd" have high popularity scores, indicating a strong presence or following.
+                "playboicarti" has both a high popularity score and the highest number of posts, suggesting a combination of popularity and active discussion.
+                "Drake" has a low number of posts, indicating a comparatively lower level of discussion or content related to this artist despite having a popularity score of 95.
+                 </p>
+        </div>
+    </div>
+
+
+    <div class="research1-1" id="sentiment-section">
+
+        <h1>Sentiment Scores Along With Popularity And Post Counts </h1>
+
+        <div class="sentiments-image1">
+            <img src="{{ url_for('static', filename='research6.png') }}" alt="Graph 6">
+            <div class="paragraph-container">
+            <p class="paragraph">
+                In the above graph some of the artists have a neutral sentiment score even with their song being released and being on top of the charts for weeks and some have maintained the score with respect to their popularity (fan following, ongoing tour, album drop etc)
+                Artists such as Taylor Swift has been breaking records with her ongoing ERAs and her high profile relationship news with Travis Kelce which leads to the content of posts related to her being more positive which has maintained her popularity.
+                Even though Playboy Carti have a highest number of posts (colab with popular artists such as TheWeeknd and Madonna for a song), the sentiment score is negative, which suggests that they have negative sentiments in their posts.                 
+            </p>
+        </div>
+        </div>
+    </div>
+    
+
+    <div class="research2" id="predictive-section">
+
+        <h1>Predictive Analysis on the Trending Artists based on Reddit posts </h1>
+        
+        <div class="centered-graph1">
+            <img src="{{ url_for('static', filename='research7.png') }}" alt="Graph 7">
+            <div class="paragraph-container">
+                <p class="paragraph">
+                    Above graph displays information about various artists, including their names and total number of followers. The bar chart visualizing the number of followers for each artist, with bars colored green if the artist's followers exceed the mean followers and red otherwise. Additionally, a dashed black line represents the mean number of followers across all artists.
+                    It also shows linear regression to predict the number of followers based on the artist's index. It splits the data into training and testing sets, fits a linear regression model, and evaluates its performance using mean absolute error, mean squared error, and root mean squared error metrics. 
+                    The graph expalins data visualization techniques with linear regression analysis to explore and predict patterns in the number of followers for a group of artists. 
+                </p>
+            </div>
+        </div>
+    </div>
+
+        <div class="centered-graph2">
+            <img src="{{ url_for('static', filename='research8.png') }}" alt="Graph 8">
+            <div class="paragraph-container">
+                <p class="paragraph">
+                    The graph visualizes the posting activity of various artists over a 20-day period starting from November 25, 2023. Each line on the plot represents a different artist, and markers indicate the number of posts made by each artist on each day. The x-axis denotes the date, while the y-axis represents the number of posts. The plot provides a comparative view of artist engagement, allowing viewers to identify patterns and trends in posting behavior over the specified consecutive days. The legend aids in associating each line with a specific artist. The visualization is generated using Matplotlib and Pandas, providing insights into the dynamic posting patterns of different artists within the given timeframe. 
+                </p>
+            </div>
+        </div>
+
+        <div class="centered-graph3">
+            <img src="{{ url_for('static', filename='research9.png') }}" alt="Graph 9">
+            <div class="paragraph-container">
+                <p class="paragraph">
+                    Above graph shows the relation between the Top 30 posts with highest number of comments. The graph represents the relationship between different posts and the number of comments each post has received. Each horizontal bar in the graph corresponds to a specific post, and the length of the bar reflects the number of comments associated with that post.
+                    The graph utilizes seaborn and matplotlib to generate a horizontal bar graph where each bar corresponds to a post, and the length of the bar represents the number of comments. The artist names and post titles are combined for better visualization.
+                </p>
+            </div>
+        </div>
+
+        <div class="centered-graph-wordcloud carousel1">
+            <img src="{{ url_for('static', filename='research11.png') }}" alt="Graph 11">
+            <img src="{{ url_for('static', filename='research12.png') }}" alt="Graph 12">
+            <img src="{{ url_for('static', filename='research13.png') }}" alt="Graph 13">
+            <div class="paragraph-container">
+                <p class="paragraph">
+                    The above WordCloud is in respect to the postive, negative and neutral comments that have been genertaed using the subreddit posts.
+                </p>
+            </div>
+        </div>
+
+        <div class="centered-graph5">
+            <img src="{{ url_for('static', filename='research14.png') }}" alt="Graph 14">
+            <div class="paragraph-container">
+                <p class="paragraph">
+                    Top Songs discussed on Reddit posts:
+                    <b>Vampire - Olivia Rodrigo</b>,
+                    <b>Stick Season</b>,
+                    <b>Agora Hills - Doja Cat </b>,
+                    <b>Cruel Summer - Taylor Swift</b>, 
+                    <b>Houdini - Dua Lipa</b>, 
+                    <b>Paint the Town Red - Doja Cat</b>, 
+                    <b>exes - Tate McRae</b> have been discussed a lot on the Redddit platform.
+                </p>
+            </div>
+        </div>
+
+        <div class="centered-graph6">
+            <img src="{{ url_for('static', filename='research15.png') }}" alt="Graph 15">
+            <div class="paragraph-container">
+                <p class="paragraph">
+                    Nicki Minaj Being the most hated artist still ranks in the top 50 due to her hit single being on the charts since the release of her movie Barbie.
+                    Above WorldCloud is generated using ModerateHateSpeechAPI.
+                </p>
+            </div>
+        </div>
+
+        <div class="research3" id="analysis">
+            <h1> Predictions on Artists w.r.t Spotify Wrapped 2023 </h1>
+            <div class="paragraph-container">
+                <p class="paragraph">
+                    It's time for predicting the Top Artists in Spotify. Cosidering a number of Factors such as popularity, Public engagement,
+                    Fan following, number of albums listened, ranking, reddit discussions and such we have over all come to a conclusion about the belows artists likely to make 
+                    in the list.
+                </p>
+            </div>
+        <div class="grid-container">
+            {% for artist in artists %}
+            {% if artist.popularity > 85 %}
+                <div class="artist-container">
+                    <h2>{{ artist.name }}</h2>
+                    {% if artist.images %}
+                        <div class="image-container">
+                            {% if artist.images|length >= 3 %}
+                                {% set third_image = artist.images[2] %}
+                                <img class="artist-image" src="{{ third_image.url }}" alt="Artist Image">
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+
+
+    <div class="footer">
+            <p>© Fall 2023 Social Media and Data Science Pipeline. All rights reserved.</p>
+    </div>
+    </div>  
+</div>
+
+<script>
+    function toggleSidebar() {
+
+        
+        const sidebar = document.querySelector('.sidebar');
+        const width = sidebar.offsetWidth;
+
+        if (width === 0 || width < 200) {
+            sidebar.style.width = '200px';
+        } else {
+            sidebar.style.width = '0';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const carouselContainer = document.querySelector('.centered-graph.carousel');
+        const images = carouselContainer.querySelectorAll('img');
+
+        let currentImageIndex = 0;
+
+        function showImage(index) {
+            images.forEach((image, i) => {
+                image.style.display = i === index ? 'block' : 'none';
+            });
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            showImage(currentImageIndex);
+        }
+
+        showImage(currentImageIndex);
+
+        setInterval(nextImage, 3000);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const carouselContainer = document.querySelector('.centered-graph-wordcloud.carousel1');
+        const images = carouselContainer.querySelectorAll('img');
+
+        let currentImageIndex = 0;
+
+        function showImage(index) {
+            images.forEach((image, i) => {
+                image.style.display = i === index ? 'block' : 'none';
+            });
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            showImage(currentImageIndex);
+        }
+
+        showImage(currentImageIndex);
+
+        setInterval(nextImage, 3000);
+    });
+
+    var artistPostCounts = JSON.parse('{{ artist_post_counts | tojson | safe }}');
+    var artistPopularity = JSON.parse('{{ artist_popularity | tojson | safe}}');
+
+document.getElementById('artists').addEventListener('change', function() {
+    var selectedArtist = this.value;
+    var selectedArtistPopularity = artistPopularity.find(artist => artist.name.replace(/\s/g, "") === selectedArtist);
+
+    var displayElement = document.getElementById('artistInfo'); // Replace 'artistInfo' with the actual ID of the element where you want to display the information
+
+    if (artistPostCounts[selectedArtist] !== undefined) {
+        if (selectedArtistPopularity !== undefined) {
+            displayElement.innerHTML = selectedArtist + " has " + artistPostCounts[selectedArtist] + " posts and a popularity score of " + selectedArtistPopularity.popularity_score;
+        } else {
+            displayElement.innerHTML = selectedArtist + " has " + artistPostCounts[selectedArtist] + " posts, but no popularity";
+        }
+    } else if (selectedArtistPopularity !== undefined) {
+        displayElement.innerHTML = selectedArtist + " has no posts but a popularity score of " + selectedArtistPopularity.popularity_score;
+    } else {
+        displayElement.innerHTML = "No data available for " + selectedArtist + ".";
+    }
+});
+
+
+</script>
+
+</body>
+</html>
