@@ -5,19 +5,6 @@
 
 ## Project-3 Implementation
 
-### Group 
-> chestnut
-
-### Work distribution
-### Implementation and Design
-- Disha Shetty (dshetty3@binghamton.edu)
-- Shubham Patil (spatil36@binghamton.edu)
-
-### Documentation
-- Disha Shetty (dshetty3@binghamton.edu)
-- Om Fale (ofale1@binghamton.edu)
-- Harshitha Gururaj (hgurura1@binghamton.edu)
-
 ### Introduction
 
 In the ever-evolving landscape of the music industry, our project delves into the intricate dynamics that define an artist's journey in this era of unprecedented change. Leveraging a fusion of social media analysis and data science methodologies, we tap into the expansive realms of Reddit and Spotify. Through Reddit, a diverse online community, we unravel fan discussions, reviews, and opinions, discerning patterns in engagement and sentiment. Simultaneously, we harness Spotify's vast streaming data, offering insights into play counts, follower growth, and playlist placements. Join us on this exploration as we gather real-time music-related data, unveiling the pulse of emerging trends and popular artists within a specified timeframe.
